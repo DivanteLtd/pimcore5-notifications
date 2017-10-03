@@ -6,8 +6,8 @@ new tab with all notifications, also it contains badge with unread
 notifications count.
 
 There're two different ways of communication:
-- WebSockets - if it's possible to initialize
-- Ajax - otherwise
+- WebSockets - if it's possible to initialize,
+- Ajax - otherwise.
 
 When there's new notification for user, it shows as window
 with possibility to close it, mark as read or open details.
@@ -48,7 +48,7 @@ Just run this command (it'll start WebSocket server):
 ```
 bin/console divante:notifications:run
 ```
-Supervisord is highly recommended to use (read more [here](http://socketo.me/docs/deploy#supervisor))
+Supervisord is highly recommended to use (read more [here](http://socketo.me/docs/deploy#supervisor)).
 
 ## Contributing
 If you'd like to contribute, please fork the repository and use a feature branch. Pull requests are warmly welcome.
