@@ -1,5 +1,5 @@
 {
-  "name": "divante-ltd/pimcore-notifications",
+  "name": "divante-ltd/pimcore5-notifications",
   "type": "pimcore-bundle",
   "description": "Notifications bundle for pimcore 5.",
   "keywords": [
