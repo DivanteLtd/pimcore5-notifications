@@ -1,0 +1,39 @@
+{
+  "name": "divante-ltd/pimcore-notifications",
+  "type": "pimcore-bundle",
+  "description": "Notifications bundle for pimcore 5.",
+  "keywords": [
+    "pimcore",
+    "notifications",
+    "bundle"
+  ],
+  "authors": [
+    {
+      "name": "DivanteLtd",
+      "email":  "pimcore@divante.pl",
+      "homepage": "http://divante.co"
+    },
+    {
+      "name": "Korneliusz Kirsz",
+      "email":  "kkirsz@divante.pl",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=7.1",
+    "pimcore/core-version": "5.0.*@alpha",
+    "cboden/ratchet": "^0.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "Divante\\NotificationsBundle\\": "/"
+    }
+  },
+  "extra": {
+    "pimcore": {
+      "bundles": [
+        "Divante\\NotificationsBundle\\DivanteNotificationsBundle"
+      ]
+    }
+  }
+}

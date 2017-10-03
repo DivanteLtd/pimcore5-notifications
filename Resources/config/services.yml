@@ -1,0 +1,17 @@
+services:
+    
+  Divante\NotificationsBundle\Controller\NotificationController:
+    public: true
+    tags: [controller.service_arguments]
+    
+  Divante\NotificationsBundle\Server\NotificationServer:
+    public: true
+    arguments:
+      $serializer: '@pimcore_admin.serializer'
+      
+  Divante\NotificationsBundle\Service\NotificationService:
+    autowire: true
+    public: false
+    
+  Divante\NotificationsBundle\Installer:
+    public: true

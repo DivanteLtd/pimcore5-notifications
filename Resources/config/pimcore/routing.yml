@@ -1,0 +1,4 @@
+divante_notifications:
+    resource: "@DivanteNotificationsBundle/Controller/"
+    type:     annotation
+    prefix:   /admin
