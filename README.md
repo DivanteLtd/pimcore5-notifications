@@ -13,15 +13,15 @@ When there's new notification for user, it shows as window
 with possibility to close it, mark as read or open details.
 
 ## Compatibility
-This module is compatible with Pimcore 5.0.*@alpha.
+This module is compatible with Pimcore ^5.0.
 
 ## Requirements
-This plugin requires php >= 7.1.
+This plugin requires php >= 7.0.
 
 ## Installing/Getting started
 ### First step
 ```
-composer require divante-ltd/pimcore5-notifications @dev
+composer require divante-ltd/pimcore5-notifications
 ```
 ### Second step
 Open Extension tab in admin panel and install plugin. After this, installation is finished.
