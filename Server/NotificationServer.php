@@ -110,7 +110,7 @@ class NotificationServer implements MessageComponentInterface
     /**     
      * @return void
      */
-    public function onPeriodicTimer() : void
+    public function onPeriodicTimer()
     {
         if ($this->clients->count() < 1) {
             return;

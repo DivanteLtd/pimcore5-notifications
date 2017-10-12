@@ -21,7 +21,7 @@ class NotificationServerCache
      * @param int $user
      * @param string $token
      */
-    public static function save(string $id, int $user, string $token) : void
+    public static function save(string $id, int $user, string $token)
     {
         $data = ['user' => $user, 'token' => $token];
         $key  = self::createKey($id);

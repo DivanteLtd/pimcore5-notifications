@@ -105,7 +105,7 @@ class NotificationService
     /**
      * @param int $id
      */
-    public function delete(int $id) : void
+    public function delete(int $id)
     {
         $this->beginTransaction();
         $notification = $this->find($id);
@@ -116,7 +116,7 @@ class NotificationService
     /**
      * @param int $user
      */
-    public function deleteAll(int $user) : void
+    public function deleteAll(int $user)
     {
         $listing = new Listing();
         $listing->setCondition('user = ?', [$user]);
@@ -131,7 +131,7 @@ class NotificationService
     /**
      *
      */
-    private function beginTransaction() : void
+    private function beginTransaction()
     {
         \Pimcore\Db::getConnection()->beginTransaction();
     }
@@ -139,7 +139,7 @@ class NotificationService
     /**
      *
      */
-    private function commit() : void
+    private function commit()
     {
         \Pimcore\Db::getConnection()->commit();
     }

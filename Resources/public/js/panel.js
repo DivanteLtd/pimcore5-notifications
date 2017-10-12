@@ -17,6 +17,41 @@ pimcore.plugin.divantenotifications.panel = Class.create({
     },
 
     getTabPanel: function () {
+
+        this.panel = new Ext.Panel({
+            id: 'pimcore_notification_panel',
+            title: t("notifications"),
+            iconCls: "pimcore_icon_email",
+            layout: 'vbox',
+            items: [
+                {
+                    xtype: 'panel',
+                    layout: 'fit',
+                    flex: 2,
+                    items: [
+                        this.getGrid()
+                    ]
+                },
+                {
+                    xtype: 'panel',
+                    flex: 1,
+                    html: 'Some wonderful information',
+                }
+            ]
+        });
+
+        var tabPanel = Ext.getCmp("pimcore_panel_tabs");
+        tabPanel.add(this.panel);
+        tabPanel.setActiveItem("pimcore_notification_panel");
+
+        this.panel.on("destroy", function () {
+            pimcore.globalmanager.remove("notifications");
+        }.bind(this));
+
+        pimcore.layout.refresh();
+
+        return this.panel;
+
         if (!this.panel) {
             var gridPanel = new Ext.Panel({
                 id: 'gridPanel',
@@ -32,7 +67,7 @@ pimcore.plugin.divantenotifications.panel = Class.create({
                 title: t("notifications"),
                 iconCls: "pimcore_icon_email",
                 border: false,
-                layout: 'border',
+                layout: 'vbox',
                 closable: true,
                 items: [
                     gridPanel
@@ -55,6 +90,27 @@ pimcore.plugin.divantenotifications.panel = Class.create({
     },
 
     getGrid: function () {
+
+        this.grid = new Ext.grid.Panel({
+            width: '100%',
+            columns: [
+                {
+                    text: 'ID'
+                },
+                {
+                    text: t('title')
+                },
+                {
+                    text: t('from')
+                },
+                {
+                    text: t('date')
+                }
+            ]
+        });
+
+        return this.grid;
+
         var itemsPerPage = pimcore.helpers.grid.getDefaultPageSize();
         this.store = pimcore.helpers.grid.buildDefaultStore(
             '/admin/notification/find-all?',
