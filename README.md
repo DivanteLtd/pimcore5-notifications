@@ -57,8 +57,8 @@ If you'd like to contribute, please fork the repository and use a feature branch
 This module respects our own PHPCS and PHPMD rulesets.
 
 ## About Authors
-![Divante-logo](http://divante.co/wp-content/uploads/2017/07/divante-logo.png "Divante")
+![Divante-logo](http://divante.co///logo_1.png "Divante")
 
-Founded in 2008 in Poland, Divante delivers high-quality e-business solutions. They support their clients in creating customized Omnichannel and eCommerce platforms, with expertise in CRM, ERP, PIM, custom web applications, and Big Data solutions. With 180 employees on board, Divante provides software expertise and user-experience design. Their team assists companies in their development and optimization of new sales channels by implementing eCommerce solutions, integrating systems, and designing and launching marketing campaigns.
+We are a Software House from Europe, headquartered in Poland and employing about 150 people. Our core competencies are built around Magento, Pimcore and bespoke software projects (we love Symfony3, Node.js, Angular, React, Vue.js). We specialize in sophisticated integration projects trying to connect hardcore IT with good product design and UX.
 
 Visit our website [Divante.co](https://divante.co/ "Divante.co") for more information.
