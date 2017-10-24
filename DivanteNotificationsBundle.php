@@ -24,7 +24,7 @@ class DivanteNotificationsBundle extends AbstractPimcoreBundle
      */
     public function getInstaller()
     {
-        return $this->container->get(Installer::class);
+        return new Installer();
     }
 
     /**

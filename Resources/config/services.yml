@@ -12,6 +12,3 @@ services:
   Divante\NotificationsBundle\Service\NotificationService:
     autowire: true
     public: false
-    
-  Divante\NotificationsBundle\Installer:
-    public: true
