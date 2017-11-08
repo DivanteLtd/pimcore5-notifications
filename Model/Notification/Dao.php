@@ -161,7 +161,7 @@ class Dao extends AbstractDao
                     $this->model->setLinkedElement(\Pimcore\Model\Asset::getById($id));
                     break;
                 case Notification::LINKED_ELEMENT_TYPE_OBJECT:
-                    $this->model->setLinkedElement(\Pimcore\Model\Object::getById($id));
+                    $this->model->setLinkedElement(\Pimcore\Model\DataObject\AbstractObject::getById($id));
                     break;
             }
         }

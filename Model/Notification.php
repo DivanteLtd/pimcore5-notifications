@@ -78,7 +78,7 @@ class Notification extends AbstractModel
     private $linkedElementType;
 
     /**
-     * @var \Pimcore\Model\Document|\Pimcore\Model\Asset|\Pimcore\Model\Object
+     * @var \Pimcore\Model\Document|\Pimcore\Model\Asset|\Pimcore\Model\DataObject\AbstractObject
      */
     private $linkedElement;
 
@@ -345,7 +345,7 @@ class Notification extends AbstractModel
     }
 
     /**
-     * @return \Pimcore\Model\Asset|\Pimcore\Model\Document|\Pimcore\Model\Object|null
+     * @return \Pimcore\Model\Asset|\Pimcore\Model\Document|\Pimcore\Model\DataObject\AbstractObject|null
      */
     public function getLinkedElement()
     {
@@ -353,7 +353,7 @@ class Notification extends AbstractModel
     }
 
     /**
-     * @param \Pimcore\Model\Asset|\Pimcore\Model\Document|\Pimcore\Model\Object|null $linkedElement
+     * @param \Pimcore\Model\Asset|\Pimcore\Model\Document|\Pimcore\Model\DataObject\AbstractObject|null $linkedElement
      * @return Notification
      * @throws \InvalidArgumentException
      */
@@ -363,7 +363,7 @@ class Notification extends AbstractModel
             $this->linkedElementType = self::LINKED_ELEMENT_TYPE_DOCUMENT;
         } else if ($linkedElement instanceof \Pimcore\Model\Asset) {
             $this->linkedElementType = self::LINKED_ELEMENT_TYPE_ASSET;
-        } else if ($linkedElement instanceof \Pimcore\Model\Object) {
+        } else if ($linkedElement instanceof \Pimcore\Model\DataObject\AbstractObject) {
             $this->linkedElementType = self::LINKED_ELEMENT_TYPE_OBJECT;
         } else if (is_null($linkedElement)) {
             $this->linkedElementType = null;
