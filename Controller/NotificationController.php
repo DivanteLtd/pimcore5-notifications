@@ -52,7 +52,7 @@ class NotificationController extends AdminController
      */
     public function findAllAction(Request $request, NotificationService $service) : JsonResponse
     {
-        $filter = ['user = ?', [(int) $this->getUser()->getId()]];
+        $filter = ['user = ?' => (int) $this->getUser()->getId()];
 
         $parser = new NotificationServiceFilterParser($request);
         foreach ($parser->parse() as $key => $val) {
