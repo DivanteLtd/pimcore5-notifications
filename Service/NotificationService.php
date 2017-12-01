@@ -81,8 +81,7 @@ class NotificationService
     public function findLastUnread(int $user, int $interval) : array
     {
         $listing = new Listing();
-        $listing->setCondition('user = ? AND unread = 1', [$user]);
-        $listing->setCondition('creationDate >= ?', [time() - $interval]);
+        $listing->setCondition('user = ? AND unread = 1 AND creationDate >= ?', [$user, time() - $interval]);
 
         $this->beginTransaction();
         $result = ['total' => $listing->count(), 'data' => $listing->getData()];
