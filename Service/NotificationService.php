@@ -56,8 +56,10 @@ class NotificationService
     {
         $listing = new Listing();
 
-        foreach ($filter as $condition => $vars) {
-            $listing->setCondition($condition, $vars);
+        if (!empty($filter)) {
+            $condition          = implode(' AND ', array_keys($filter));
+            $conditionVariables = array_values($filter);
+            $listing->setCondition($condition, $conditionVariables);
         }
 
         $listing->setOrderKey('creationDate');
