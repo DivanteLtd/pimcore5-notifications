@@ -94,6 +94,12 @@ pimcore.plugin.divantenotifications.plugin = Class.create(pimcore.plugin.admin, 
         catch (e) {
             pimcore.globalmanager.add("notifications", new pimcore.plugin.divantenotifications.panel());
         }
+    },
+
+    postOpenObject: function (object, type) {
+        var key = 'send_notification_button_' + object.id;
+        var value = new pimcore.plugin.divantenotifications.button(object);
+        pimcore.globalmanager.add(key, value);
     }
 });
 

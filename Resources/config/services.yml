@@ -12,3 +12,7 @@ services:
   Divante\NotificationsBundle\Service\NotificationService:
     autowire: true
     public: false
+
+  Divante\NotificationsBundle\Service\UserService:
+    autowire: true
+    public: false

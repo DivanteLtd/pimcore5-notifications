@@ -11,9 +11,11 @@ declare(strict_types=1);
 namespace Divante\NotificationsBundle\Controller;
 
 use Divante\NotificationsBundle\Dto\NotificationDto;
+use Divante\NotificationsBundle\Dto\UserDto;
 use Divante\NotificationsBundle\Server\NotificationServerCache;
 use Divante\NotificationsBundle\Service\NotificationService;
 use Divante\NotificationsBundle\Service\NotificationServiceFilterParser;
+use Divante\NotificationsBundle\Service\UserService;
 use Pimcore\Bundle\AdminBundle\Controller\AdminController;
 use Pimcore\Bundle\AdminBundle\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,6 +28,33 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class NotificationController extends AdminController
 {
+    /**
+     * @param UserService $service
+     * @return JsonResponse
+     * @Route("/users")
+     */
+    public function usersAction(UserService $service) : JsonResponse
+    {
+        $data = [];
+        foreach ($service->findAll($this->getUser()) as $user) {
+            $data[] = (new UserDto($user))->getData();
+        }
+
+        return $this->json($data);
+    }
+
+    /**
+     * @return JsonResponse
+     * @Route("/actions")
+     */
+    public function actionsAction() : JsonResponse
+    {
+        return $this->json([
+            ['id' => 1, 'text' => 'Add photo'],
+            ['id' => 2, 'text' => 'Add description'],
+        ]);
+    }
+
     /**
      * @param Request $request
      * @param NotificationService $service

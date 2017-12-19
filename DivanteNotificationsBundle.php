@@ -33,9 +33,11 @@ class DivanteNotificationsBundle extends AbstractPimcoreBundle
     public function getJsPaths()
     {
         return [
+            '/bundles/divantenotifications/js/button.js',
             '/bundles/divantenotifications/js/helper.js',
             '/bundles/divantenotifications/js/panel.js',
             '/bundles/divantenotifications/js/plugin.js',
+            '/bundles/divantenotifications/js/window.js',
         ];
     }
 
