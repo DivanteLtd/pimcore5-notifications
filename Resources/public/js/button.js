@@ -14,7 +14,7 @@ pimcore.plugin.divantenotifications.button = Class.create({
 
         if (!this.button) {
             this.button = new Ext.Button({
-                tooltip: "Send notification",
+                tooltip: t("Send notification"),
                 iconCls: "pimcore_status_notification",
                 scale: "medium",
                 handler: function () {
@@ -22,15 +22,15 @@ pimcore.plugin.divantenotifications.button = Class.create({
                 }.bind(this)
             });
 
-            this.button.on('destroy', function () {
-                pimcore.globalmanager.remove('send_notification_button_' + this.object.id);
+            this.button.on("destroy", function () {
+                pimcore.globalmanager.remove("send_notification_button_" + this.object.id);
             }.bind(this));
 
-            var toolbar = Ext.getCmp('object_toolbar_' + this.object.id);
+            var toolbar = Ext.getCmp("object_toolbar_" + this.object.id);
             var items = toolbar.items.items;
 
             for (var i = 1; i < items.length; i++) {
-                if (items[i - 1].xtype === 'tbseparator') {
+                if (items[i - 1].xtype === "tbseparator") {
                     toolbar.insert(i, this.button);
                     break;
                 }

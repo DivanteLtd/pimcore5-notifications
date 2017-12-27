@@ -54,7 +54,18 @@ class NotificationController extends AdminController
             ['id' => 2, 'text' => 'Add description'],
         ]);
     }
-
+    
+    /**
+     * @param Request $request
+     * @param NotificationService $service
+     * @return JsonResponse
+     * @Route("/send")
+     */
+    public function sendAction(Request $request, NotificationService $service) : JsonResponse
+    {
+        return $this->json(['success' => true]);
+    }
+    
     /**
      * @param Request $request
      * @param NotificationService $service
