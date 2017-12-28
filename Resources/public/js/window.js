@@ -65,10 +65,7 @@ pimcore.plugin.divantenotifications.window = Class.create({
                     xtype: "textareafield",
                     name: "note",
                     fieldLabel: t("Note"),
-                    width: "100%",
-                    allowBlank: false,
-                    blankText: t("This field is required"),
-                    msgTarget: "under"
+                    width: "100%"
                 }
             ];
 
