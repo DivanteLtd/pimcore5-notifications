@@ -10,6 +10,7 @@ namespace Divante\NotificationsBundle\Service;
 
 use Divante\NotificationsBundle\Model\Notification\Listing;
 use Divante\NotificationsBundle\Model\Notification;
+use Divante\NotificationsBundle\Service\ActionService;
 use Pimcore\Model\DataObject\AbstractObject;
 use Pimcore\Model\User;
 
@@ -19,26 +20,35 @@ use Pimcore\Model\User;
  */
 class NotificationService
 {
-    /**
-     * @param int $objectId
+    /**     
      * @param int $userId
      * @param int $actionId
      * @param string $note
+     * @param int $objectId
      * @throws \UnexpectedValueException
      */
-    public function send(int $objectId, int $userId, int $actionId, string $note)
+    public function send(int $userId, int $actionId, string $note, int $objectId)
     {
         $this->beginTransaction();
+                
+        $user = User::getById($userId);
+        if (!$user instanceof User) {
+            throw new \UnexpectedValueException(sprintf('No user found with the ID %d', $userId));
+        }
+        
+        $action = (new ActionService())->find($actionId);
         
         $object = AbstractObject::getById($objectId);
         if (!$object instanceof AbstractObject) {
-            throw new \UnexpectedValueException();
+            throw new \UnexpectedValueException(sprint('No object found with the ID %d', $objectId));
         }
         
-        $user = User::getById($userId);
-        if (!$user instanceof User) {
-            throw new \UnexpectedValueException();
-        }
+        $notification = new Notification();        
+        $notification->setUser($user->getId());
+        $notification->setTitle($action->getText());
+        $notification->setMessage($note);     
+        $notification->setLinkedElement($object);
+        $notification->save();
         
         $this->commit();
     }

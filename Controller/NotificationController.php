@@ -13,6 +13,7 @@ namespace Divante\NotificationsBundle\Controller;
 use Divante\NotificationsBundle\Dto\NotificationDto;
 use Divante\NotificationsBundle\Dto\UserDto;
 use Divante\NotificationsBundle\Server\NotificationServerCache;
+use Divante\NotificationsBundle\Service\ActionService;
 use Divante\NotificationsBundle\Service\NotificationService;
 use Divante\NotificationsBundle\Service\NotificationServiceFilterParser;
 use Divante\NotificationsBundle\Service\UserService;
@@ -46,16 +47,19 @@ class NotificationController extends AdminController
     }
 
     /**
+     * @param ActionService $service
      * @return JsonResponse
      * @Route("/actions")
      * @Method({"GET"})
      */
-    public function actionsAction() : JsonResponse
+    public function actionsAction(ActionService $service) : JsonResponse
     {
-        return $this->json([
-            ['id' => 1, 'text' => 'Add photo'],
-            ['id' => 2, 'text' => 'Add description'],
-        ]);
+        $data = [];
+        foreach ($service->findAll() as $action) {
+            $data[] = $action->getObjectVars();
+        }
+        
+        return $this->json($data);
     }
     
     /**
@@ -66,12 +70,12 @@ class NotificationController extends AdminController
      * @Method({"POST"})
      */
     public function sendAction(Request $request, NotificationService $service) : JsonResponse
-    {
-        $objectId = (int) $request->get('objectId', 0);
+    {        
         $userId   = (int) $request->get('userId', 0);
         $actionId = (int) $request->get('actionId', 0);
         $note     = $request->get('note', '');        
-        $service->send($objectId, $userId, $actionId, $note);        
+        $objectId = (int) $request->get('objectId', 0);
+        $service->send($userId, $actionId, $note, $objectId);        
         
         return $this->json(['success' => true]);
     }

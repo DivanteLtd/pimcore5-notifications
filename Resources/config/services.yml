@@ -8,7 +8,11 @@ services:
     public: true
     arguments:
       $serializer: '@pimcore_admin.serializer'
-      
+
+  Divante\NotificationsBundle\Service\ActionService:
+    autowire: true
+    public: false
+    
   Divante\NotificationsBundle\Service\NotificationService:
     autowire: true
     public: false
