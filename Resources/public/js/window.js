@@ -33,7 +33,7 @@ pimcore.plugin.divantenotifications.window = Class.create({
             var items = [
                 {
                     xtype: "combobox",
-                    name: "user",
+                    name: "userId",
                     fieldLabel: t("User"),
                     width: "100%",
                     forceSelection: true,
@@ -48,7 +48,7 @@ pimcore.plugin.divantenotifications.window = Class.create({
                 },
                 {
                     xtype: "combobox",
-                    name: "action",
+                    name: "actionId",
                     fieldLabel: t("Action"),
                     width: "100%",
                     forceSelection: true,
