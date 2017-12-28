@@ -10,6 +10,8 @@ namespace Divante\NotificationsBundle\Service;
 
 use Divante\NotificationsBundle\Model\Notification\Listing;
 use Divante\NotificationsBundle\Model\Notification;
+use Pimcore\Model\DataObject\AbstractObject;
+use Pimcore\Model\User;
 
 /**
  * Class NotificationService
@@ -17,6 +19,30 @@ use Divante\NotificationsBundle\Model\Notification;
  */
 class NotificationService
 {
+    /**
+     * @param int $objectId
+     * @param int $userId
+     * @param int $actionId
+     * @param string $note
+     * @throws \UnexpectedValueException
+     */
+    public function send(int $objectId, int $userId, int $actionId, string $note)
+    {
+        $this->beginTransaction();
+        
+        $object = AbstractObject::getById($objectId);
+        if (!$object instanceof AbstractObject) {
+            throw new \UnexpectedValueException();
+        }
+        
+        $user = User::getById($userId);
+        if (!$user instanceof User) {
+            throw new \UnexpectedValueException();
+        }
+        
+        $this->commit();
+    }
+    
     /**
      * @param int $id
      * @return Notification
