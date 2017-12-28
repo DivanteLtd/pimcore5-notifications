@@ -18,6 +18,7 @@ use Divante\NotificationsBundle\Service\NotificationServiceFilterParser;
 use Divante\NotificationsBundle\Service\UserService;
 use Pimcore\Bundle\AdminBundle\Controller\AdminController;
 use Pimcore\Bundle\AdminBundle\HttpFoundation\JsonResponse;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -32,6 +33,7 @@ class NotificationController extends AdminController
      * @param UserService $service
      * @return JsonResponse
      * @Route("/users")
+     * @Method({"GET"})
      */
     public function usersAction(UserService $service) : JsonResponse
     {
@@ -46,6 +48,7 @@ class NotificationController extends AdminController
     /**
      * @return JsonResponse
      * @Route("/actions")
+     * @Method({"GET"})
      */
     public function actionsAction() : JsonResponse
     {
@@ -60,9 +63,16 @@ class NotificationController extends AdminController
      * @param NotificationService $service
      * @return JsonResponse
      * @Route("/send")
+     * @Method({"POST"})
      */
     public function sendAction(Request $request, NotificationService $service) : JsonResponse
     {
+        $objectId = (int) $request->get('objectId', 0);
+        $userId   = (int) $request->get('userId', 0);
+        $actionId = (int) $request->get('actionId', 0);
+        $note     = $request->get('note', '');        
+        $service->send($objectId, $userId, $actionId, $note);        
+        
         return $this->json(['success' => true]);
     }
     
