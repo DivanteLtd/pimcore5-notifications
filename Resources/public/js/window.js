@@ -78,9 +78,7 @@ pimcore.plugin.divantenotifications.window = Class.create({
                 bodyStyle: "padding:10px",
                 url: "/admin/notification/send",
                 items: items,
-                defaults: {
-                    labelWidth: 100
-                },
+                defaults: {labelWidth: 100},
                 collapsible: false,
                 autoScroll: true,
                 buttons: [
@@ -133,13 +131,13 @@ pimcore.plugin.divantenotifications.window = Class.create({
         this.getWindow().destroy();
     },
     
-    onSuccess: function (form, action) {
+    onSuccess: function (form, result, data) {
         this.tab.unmask();
         pimcore.helpers.showNotification(t("success"), t("Notification has been sent"), "success");
         this.getWindow().destroy();
     },
     
-    onFailure: function (form, action) {
+    onFailure: function (form, result) {
         this.tab.unmask();
         this.getWindow().destroy();
     }
