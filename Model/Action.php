@@ -24,7 +24,23 @@ class Action extends AbstractModel
     /**
      * @var string
      */
-    public $text;    
+    public $text;
+
+    /**
+     * @param int $id
+     * @return Action|null
+     */
+    public static function getById($id)
+    {
+        try {
+            $action = new self();
+            $action->getDao()->getById($id);
+            return $action;
+        } catch (\Exception $ex) {
+
+        }
+        return null;
+    }
 
     /**
      * @return int
