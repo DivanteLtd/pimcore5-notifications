@@ -16,14 +16,6 @@ use Divante\NotificationsBundle\Model\Action;
  */
 class ActionService
 {
-    /**    
-     * @var array
-     */
-    protected $items = [
-        1 => ['id' => 1, 'text' => 'Add photo'],
-        2 => ['id' => 2, 'text' => 'Add description'],        
-    ];
-    
     /**
      * @param int $id
      * @return Action
@@ -31,13 +23,12 @@ class ActionService
      */
     public function find(int $id) : Action
     {
-        if (!isset($this->items[$id])) {
+        $action = Action::getById($id);
+
+        if (!$action instanceof Action) {
             throw new \UnexpectedValueException(sprintf('No action found with ID %d', $id));
         }
-        
-        $action = new Action();
-        $action->setValues($this->items[$id]);
-        
+
         return $action;
     }
     
@@ -46,12 +37,18 @@ class ActionService
      */
     public function findAll() : array
     {
-        $data = [];
-        foreach ($this->items as $item) {
-            $action = new Action();
-            $action->setValues($item);
-            $data[] = $action;
-        }
-        return $data;
+        $listing = new Action\Listing();
+        $listing->load();
+        return $listing->getActions();
+    }
+
+    /**
+     * @return int
+     */
+    public function countAll() : int
+    {
+        $listing = new Action\Listing();
+        $listing->load();
+        return $listing->getTotalCount();
     }
 }

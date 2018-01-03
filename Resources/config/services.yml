@@ -1,5 +1,9 @@
 services:
-    
+
+  Divante\NotificationsBundle\Controller\ActionController:
+    public: true
+    tags: [controller.service_arguments]
+
   Divante\NotificationsBundle\Controller\NotificationController:
     public: true
     tags: [controller.service_arguments]
