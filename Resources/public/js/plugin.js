@@ -30,7 +30,7 @@ pimcore.plugin.divantenotifications.plugin = Class.create(pimcore.plugin.admin, 
                     handler: this.showNotificationTab.bind(this)
                 },
                 {
-                    text: t("Actions"),
+                    text: t("Notification actions"),
                     iconCls: "pimcore_icon_object",
                     handler: this.showActionTab.bind(this)
                 }
@@ -50,7 +50,12 @@ pimcore.plugin.divantenotifications.plugin = Class.create(pimcore.plugin.admin, 
     },
 
     showActionTab: function () {
-
+        try {
+            pimcore.globalmanager.get("notification_actions").activate();
+        }
+        catch (e) {
+            pimcore.globalmanager.add("notification_actions", new pimcore.plugin.divantenotifications.actions());
+        }
     },
 
     pimcoreReady: function (params, broker) {
