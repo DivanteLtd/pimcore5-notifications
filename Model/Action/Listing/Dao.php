@@ -1,6 +1,6 @@
 <?php
 /**
- * @category    Wurth
+ * @category    pimcore5-notification
  * @date        03/01/2018
  * @author      Korneliusz Kirsz <kkirsz@divante.pl>
  * @copyright   Copyright (c) 2018 DIVANTE (http://divante.pl)
