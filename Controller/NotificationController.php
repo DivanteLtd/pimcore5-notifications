@@ -11,11 +11,15 @@ declare(strict_types=1);
 namespace Divante\NotificationsBundle\Controller;
 
 use Divante\NotificationsBundle\Dto\NotificationDto;
+use Divante\NotificationsBundle\Dto\UserDto;
 use Divante\NotificationsBundle\Server\NotificationServerCache;
+use Divante\NotificationsBundle\Service\ActionService;
 use Divante\NotificationsBundle\Service\NotificationService;
 use Divante\NotificationsBundle\Service\NotificationServiceFilterParser;
+use Divante\NotificationsBundle\Service\UserService;
 use Pimcore\Bundle\AdminBundle\Controller\AdminController;
 use Pimcore\Bundle\AdminBundle\HttpFoundation\JsonResponse;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -26,6 +30,56 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class NotificationController extends AdminController
 {
+    /**
+     * @param UserService $service
+     * @return JsonResponse
+     * @Route("/users")
+     * @Method({"GET"})
+     */
+    public function usersAction(UserService $service) : JsonResponse
+    {
+        $data = [];
+        foreach ($service->findAll($this->getUser()) as $user) {
+            $data[] = (new UserDto($user))->getData();
+        }
+
+        return $this->json($data);
+    }
+
+    /**
+     * @param ActionService $service
+     * @return JsonResponse
+     * @Route("/actions")
+     * @Method({"GET"})
+     */
+    public function actionsAction(ActionService $service) : JsonResponse
+    {
+        $data = [];
+        foreach ($service->findAll() as $action) {
+            $data[] = $action->getObjectVars();
+        }
+        
+        return $this->json($data);
+    }
+    
+    /**
+     * @param Request $request
+     * @param NotificationService $service
+     * @return JsonResponse
+     * @Route("/send")
+     * @Method({"POST"})
+     */
+    public function sendAction(Request $request, NotificationService $service) : JsonResponse
+    {        
+        $userId   = (int) $request->get('userId', 0);
+        $actionId = (int) $request->get('actionId', 0);
+        $note     = $request->get('note', '');        
+        $objectId = (int) $request->get('objectId', 0);
+        $service->send($userId, $actionId, $note, $objectId);        
+        
+        return $this->json(['success' => true]);
+    }
+    
     /**
      * @param Request $request
      * @param NotificationService $service

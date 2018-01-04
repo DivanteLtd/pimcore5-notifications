@@ -29,8 +29,8 @@ pimcore.plugin.divantenotifications.panel = Class.create({
 
             this.panel = new Ext.Panel({
                 id: "pimcore_notification_panel",
-                title: t("notifications"),
-                iconCls: "pimcore_icon_email",
+                title: t("Notifications"),
+                iconCls: "pimcore_icon_object",
                 border: false,
                 layout: 'border',
                 closable: true,

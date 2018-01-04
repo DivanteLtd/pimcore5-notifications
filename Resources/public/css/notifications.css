@@ -9,10 +9,10 @@
     background-clip: padding-box;
     display: inline-block;
     position: relative;
-    right: -27px;
-    bottom: -14px;
+    right: -35px;
+    bottom: -25px;
 }
 
-#pimcore_status_notification {
-    background-image: url(/pimcore/static6/img/flat-color-icons/email.svg);
+.pimcore_status_notification {
+    background: url(/pimcore/static6/img/flat-color-icons/email.svg) center center no-repeat !important;
 }

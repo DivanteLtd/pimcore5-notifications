@@ -10,6 +10,9 @@ namespace Divante\NotificationsBundle\Service;
 
 use Divante\NotificationsBundle\Model\Notification\Listing;
 use Divante\NotificationsBundle\Model\Notification;
+use Divante\NotificationsBundle\Service\ActionService;
+use Pimcore\Model\DataObject\AbstractObject;
+use Pimcore\Model\User;
 
 /**
  * Class NotificationService
@@ -17,6 +20,39 @@ use Divante\NotificationsBundle\Model\Notification;
  */
 class NotificationService
 {
+    /**     
+     * @param int $userId
+     * @param int $actionId
+     * @param string $note
+     * @param int $objectId
+     * @throws \UnexpectedValueException
+     */
+    public function send(int $userId, int $actionId, string $note, int $objectId)
+    {
+        $this->beginTransaction();
+                
+        $user = User::getById($userId);
+        if (!$user instanceof User) {
+            throw new \UnexpectedValueException(sprintf('No user found with the ID %d', $userId));
+        }
+        
+        $action = (new ActionService())->find($actionId);
+        
+        $object = AbstractObject::getById($objectId);
+        if (!$object instanceof AbstractObject) {
+            throw new \UnexpectedValueException(sprint('No object found with the ID %d', $objectId));
+        }
+        
+        $notification = new Notification();        
+        $notification->setUser($user->getId());
+        $notification->setTitle($action->getText());
+        $notification->setMessage($note);     
+        $notification->setLinkedElement($object);
+        $notification->save();
+        
+        $this->commit();
+    }
+    
     /**
      * @param int $id
      * @return Notification
@@ -56,8 +92,10 @@ class NotificationService
     {
         $listing = new Listing();
 
-        foreach ($filter as $condition => $vars) {
-            $listing->setCondition($condition, $vars);
+        if (!empty($filter)) {
+            $condition          = implode(' AND ', array_keys($filter));
+            $conditionVariables = array_values($filter);
+            $listing->setCondition($condition, $conditionVariables);
         }
 
         $listing->setOrderKey('creationDate');
