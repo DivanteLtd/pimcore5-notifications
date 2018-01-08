@@ -72,10 +72,11 @@ class NotificationController extends AdminController
     public function sendAction(Request $request, NotificationService $service) : JsonResponse
     {        
         $userId   = (int) $request->get('userId', 0);
+        $fromUser = (int) $this->getUser()->getId();
         $actionId = (int) $request->get('actionId', 0);
         $note     = $request->get('note', '');        
         $objectId = (int) $request->get('objectId', 0);
-        $service->send($userId, $actionId, $note, $objectId);        
+        $service->send($userId, $fromUser, $actionId, $note, $objectId);
         
         return $this->json(['success' => true]);
     }

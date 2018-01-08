@@ -22,12 +22,13 @@ class NotificationService
 {
     /**     
      * @param int $userId
+     * @param int $fromUser
      * @param int $actionId
      * @param string $note
      * @param int $objectId
      * @throws \UnexpectedValueException
      */
-    public function send(int $userId, int $actionId, string $note, int $objectId)
+    public function send(int $userId, int $fromUser, int $actionId, string $note, int $objectId)
     {
         $this->beginTransaction();
                 
@@ -45,6 +46,7 @@ class NotificationService
         
         $notification = new Notification();        
         $notification->setUser($user->getId());
+        $notification->setFromUser($fromUser);
         $notification->setTitle($action->getText());
         $notification->setMessage($note);     
         $notification->setLinkedElement($object);
