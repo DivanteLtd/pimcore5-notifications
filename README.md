@@ -13,7 +13,7 @@ When there's new notification for user, it shows as window
 with possibility to close it, mark as read or open details.
 
 ## Compatibility
-This module is compatible with Pimcore ^5.0.
+This module is compatible with Pimcore v5.1.1.
 
 ## Requirements
 This plugin requires php >= 7.0.

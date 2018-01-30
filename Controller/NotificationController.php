@@ -39,11 +39,11 @@ class NotificationController extends AdminController
     public function usersAction(UserService $service) : JsonResponse
     {
         $data = [];
-        foreach ($service->findAll($this->getUser()) as $user) {
+        foreach ($service->findAll($this->getAdminUser()) as $user) {
             $data[] = (new UserDto($user))->getData();
         }
 
-        return $this->json($data);
+        return $this->adminJson($data);
     }
 
     /**
@@ -59,7 +59,7 @@ class NotificationController extends AdminController
             $data[] = $action->getObjectVars();
         }
         
-        return $this->json($data);
+        return $this->adminJson($data);
     }
     
     /**
@@ -72,13 +72,13 @@ class NotificationController extends AdminController
     public function sendAction(Request $request, NotificationService $service) : JsonResponse
     {        
         $userId   = (int) $request->get('userId', 0);
-        $fromUser = (int) $this->getUser()->getId();
+        $fromUser = (int) $this->getAdminUser()->getId();
         $actionId = (int) $request->get('actionId', 0);
         $note     = $request->get('note', '');        
         $objectId = (int) $request->get('objectId', 0);
         $service->send($userId, $fromUser, $actionId, $note, $objectId);
         
-        return $this->json(['success' => true]);
+        return $this->adminJson(['success' => true]);
     }
     
     /**
@@ -93,7 +93,7 @@ class NotificationController extends AdminController
         $notification = $service->findAndMarkAsRead($id);
         $data = (new NotificationDto($notification))->getData();
 
-        return $this->json([
+        return $this->adminJson([
             'success' => true,
             'data'    => $data,
         ]);
@@ -107,7 +107,7 @@ class NotificationController extends AdminController
      */
     public function findAllAction(Request $request, NotificationService $service) : JsonResponse
     {
-        $filter = ['user = ?' => (int) $this->getUser()->getId()];
+        $filter = ['user = ?' => (int) $this->getAdminUser()->getId()];
 
         $parser = new NotificationServiceFilterParser($request);
         foreach ($parser->parse() as $key => $val) {
@@ -126,7 +126,7 @@ class NotificationController extends AdminController
             $data[] = (new NotificationDto($notification))->getData();
         }
 
-        return $this->json([
+        return $this->adminJson([
             'success' => true,
             'total'   => $result['total'],
             'data'    => $data,
@@ -141,7 +141,7 @@ class NotificationController extends AdminController
      */
     public function findLastUnreadAction(Request $request, NotificationService $service) : JsonResponse
     {
-        $user     = $this->getUser();
+        $user     = $this->getAdminUser();
         $interval = (int) $request->get('interval', 10);
         $result   = $service->findLastUnread((int) $user->getId(), $interval);
         $unread   = $service->countAllUnread((int) $user->getId());
@@ -151,7 +151,7 @@ class NotificationController extends AdminController
             $data[] = (new NotificationDto($notification))->getData();
         }
 
-        return $this->json([
+        return $this->adminJson([
             'success' => true,
             'total'   => $result['total'],
             'data'    => $data,
@@ -169,7 +169,7 @@ class NotificationController extends AdminController
     {
         $id = (int) $request->get('id', 0);
         $service->findAndMarkAsRead($id);
-        return $this->json(['success' => true]);
+        return $this->adminJson(['success' => true]);
     }
 
     /**
@@ -182,7 +182,7 @@ class NotificationController extends AdminController
     {
         $id = (int) $request->get('id', 0);
         $service->delete($id);
-        return $this->json(['success' => true]);
+        return $this->adminJson(['success' => true]);
     }
 
     /**
@@ -193,9 +193,9 @@ class NotificationController extends AdminController
      */
     public function deleteAllAction(Request $request, NotificationService $service) : JsonResponse
     {
-        $user = $this->getUser();
+        $user = $this->getAdminUser();
         $service->deleteAll((int) $user->getId());
-        return $this->json(['success' => true]);
+        return $this->adminJson(['success' => true]);
     }
 
     /**
@@ -205,9 +205,9 @@ class NotificationController extends AdminController
     public function tokenAction() : JsonResponse
     {
         $token      = sprintf('%s_%s', md5((string) time()), mt_rand(1000000, 9999999));
-        $userId     = $this->getUser()->getId();
+        $userId     = $this->getAdminUser()->getId();
         $userIdHash = md5($userId);
         NotificationServerCache::save($userIdHash, (int) $userId, $token);
-        return $this->json(['user' => $userIdHash, 'token' => $token]);
+        return $this->adminJson(['user' => $userIdHash, 'token' => $token]);
     }
 }

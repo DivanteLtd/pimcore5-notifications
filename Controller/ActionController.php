@@ -45,7 +45,7 @@ class ActionController extends AdminController
                 $action->setValues($data);
                 $action->save();
 
-                return $this->json([
+                return $this->adminJson([
                     'success' => true,
                     'data'    => $action->getObjectVars(),
                 ]);
@@ -54,7 +54,7 @@ class ActionController extends AdminController
                 $action->setValues($data);
                 $action->save();
 
-                return $this->json([
+                return $this->adminJson([
                     'success' => true,
                     'data'    => $action->getObjectVars(),
                 ]);
@@ -62,7 +62,7 @@ class ActionController extends AdminController
                 $action = $service->find((int) $data['id']);
                 $action->delete();
 
-                return $this->json([
+                return $this->adminJson([
                     'success' => true,
                     'data'    => [],
                 ]);
@@ -74,7 +74,7 @@ class ActionController extends AdminController
                 $data[] = $item->getObjectVars();
             }
 
-            return $this->json([
+            return $this->adminJson([
                 'success' => true,
                 'data'    => $data,
                 'total'   => $service->countAll(),

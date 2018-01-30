@@ -21,7 +21,7 @@
   ],
   "require": {
     "php": ">=7.0",
-    "pimcore/core-version": "^5.0",
+    "pimcore/core-version": "v5.1.1",
     "cboden/ratchet": "^0.4"
   },
   "autoload": {
