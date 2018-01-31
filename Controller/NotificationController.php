@@ -206,7 +206,7 @@ class NotificationController extends AdminController
     {
         $token      = sprintf('%s_%s', md5((string) time()), mt_rand(1000000, 9999999));
         $userId     = $this->getAdminUser()->getId();
-        $userIdHash = md5($userId);
+        $userIdHash = md5((string) $userId);
         NotificationServerCache::save($userIdHash, (int) $userId, $token);
         return $this->adminJson(['user' => $userIdHash, 'token' => $token]);
     }
