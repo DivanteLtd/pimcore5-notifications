@@ -12,6 +12,7 @@ namespace Divante\NotificationsBundle\Controller;
 
 use Divante\NotificationsBundle\Model\Action;
 use Divante\NotificationsBundle\Service\ActionService;
+use Divante\NotificationsBundle\DivanteNotificationsBundle;
 use Pimcore\Bundle\AdminBundle\Controller\AdminController;
 use Pimcore\Bundle\AdminBundle\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -34,6 +35,8 @@ class ActionController extends AdminController
      */
     public function indexAction(Request $request, ActionService $service) : JsonResponse
     {
+        $this->checkPermission(DivanteNotificationsBundle::PERMISSION);
+
         $data = $request->get('data');
         if ($data) {
             $xaction = $request->get('xaction');

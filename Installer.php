@@ -10,9 +10,11 @@ declare(strict_types=1);
 
 namespace Divante\NotificationsBundle;
 
+use Divante\NotificationsBundle\DivanteNotificationsBundle;
 use Pimcore\Db;
 use Pimcore\Extension\Bundle\Installer\Exception\InstallationException;
 use Pimcore\Extension\Bundle\Installer\AbstractInstaller;
+use Pimcore\Model\User\Permission;
 use Pimcore\Tool\Admin;
 
 /**
@@ -27,6 +29,8 @@ class Installer extends AbstractInstaller
      */
     public function install()
     {
+        Permission\Definition::create(DivanteNotificationsBundle::PERMISSION);
+
         $sql = file_get_contents(__DIR__ . '/Resources/sql/install.sql');
         try {
             Db::getConnection()->query($sql);
@@ -54,13 +58,18 @@ class Installer extends AbstractInstaller
      */
     public function isInstalled()
     {
-        $ret = false;
+        $permission = Permission\Definition::getByKey(DivanteNotificationsBundle::PERMISSION);
+        if (!$permission instanceof Permission\Definition) {
+            return false;
+        }
+
         try {
             $stmt = Db::getConnection()->query("SHOW TABLES LIKE 'bundle_notifications'");
             $ret = strcmp((string) $stmt->fetchColumn(), 'bundle_notifications') === 0;
         } catch (\Exception $ex) {
             $ret = false;
         }
+
         return $ret;
     }
 

@@ -1,5 +1,4 @@
-DROP TABLE IF EXISTS `bundle_notifications`;
-CREATE TABLE `bundle_notifications` (
+CREATE TABLE IF NOT EXISTS `bundle_notifications` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `type` varchar(20) NOT NULL DEFAULT 'info',
   `title` varchar(250) NOT NULL DEFAULT '',

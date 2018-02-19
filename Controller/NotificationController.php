@@ -17,6 +17,7 @@ use Divante\NotificationsBundle\Service\ActionService;
 use Divante\NotificationsBundle\Service\NotificationService;
 use Divante\NotificationsBundle\Service\NotificationServiceFilterParser;
 use Divante\NotificationsBundle\Service\UserService;
+use Divante\NotificationsBundle\DivanteNotificationsBundle;
 use Pimcore\Bundle\AdminBundle\Controller\AdminController;
 use Pimcore\Bundle\AdminBundle\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -38,6 +39,8 @@ class NotificationController extends AdminController
      */
     public function usersAction(UserService $service) : JsonResponse
     {
+        $this->checkPermission(DivanteNotificationsBundle::PERMISSION);
+
         $data = [];
         foreach ($service->findAll($this->getAdminUser()) as $user) {
             $data[] = (new UserDto($user))->getData();
@@ -54,6 +57,8 @@ class NotificationController extends AdminController
      */
     public function actionsAction(ActionService $service) : JsonResponse
     {
+        $this->checkPermission(DivanteNotificationsBundle::PERMISSION);
+
         $data = [];
         foreach ($service->findAll() as $action) {
             $data[] = $action->getObjectVars();
@@ -70,7 +75,9 @@ class NotificationController extends AdminController
      * @Method({"POST"})
      */
     public function sendAction(Request $request, NotificationService $service) : JsonResponse
-    {        
+    {
+        $this->checkPermission(DivanteNotificationsBundle::PERMISSION);
+
         $userId   = (int) $request->get('userId', 0);
         $fromUser = (int) $this->getAdminUser()->getId();
         $actionId = (int) $request->get('actionId', 0);
@@ -89,6 +96,8 @@ class NotificationController extends AdminController
      */
     public function findAction(Request $request, NotificationService $service) : JsonResponse
     {
+        $this->checkPermission(DivanteNotificationsBundle::PERMISSION);
+
         $id = (int) $request->get('id', 0);
         $notification = $service->findAndMarkAsRead($id);
         $data = (new NotificationDto($notification))->getData();
@@ -107,6 +116,8 @@ class NotificationController extends AdminController
      */
     public function findAllAction(Request $request, NotificationService $service) : JsonResponse
     {
+        $this->checkPermission(DivanteNotificationsBundle::PERMISSION);
+
         $filter = ['user = ?' => (int) $this->getAdminUser()->getId()];
 
         $parser = new NotificationServiceFilterParser($request);
@@ -141,6 +152,8 @@ class NotificationController extends AdminController
      */
     public function findLastUnreadAction(Request $request, NotificationService $service) : JsonResponse
     {
+        $this->checkPermission(DivanteNotificationsBundle::PERMISSION);
+
         $user     = $this->getAdminUser();
         $interval = (int) $request->get('interval', 10);
         $result   = $service->findLastUnread((int) $user->getId(), $interval);
@@ -167,6 +180,8 @@ class NotificationController extends AdminController
      */
     public function markAsReadAction(Request $request, NotificationService $service) : JsonResponse
     {
+        $this->checkPermission(DivanteNotificationsBundle::PERMISSION);
+
         $id = (int) $request->get('id', 0);
         $service->findAndMarkAsRead($id);
         return $this->adminJson(['success' => true]);
@@ -180,6 +195,8 @@ class NotificationController extends AdminController
      */
     public function deleteAction(Request $request, NotificationService $service) : JsonResponse
     {
+        $this->checkPermission(DivanteNotificationsBundle::PERMISSION);
+
         $id = (int) $request->get('id', 0);
         $service->delete($id);
         return $this->adminJson(['success' => true]);
@@ -193,6 +210,8 @@ class NotificationController extends AdminController
      */
     public function deleteAllAction(Request $request, NotificationService $service) : JsonResponse
     {
+        $this->checkPermission(DivanteNotificationsBundle::PERMISSION);
+
         $user = $this->getAdminUser();
         $service->deleteAll((int) $user->getId());
         return $this->adminJson(['success' => true]);
@@ -204,6 +223,8 @@ class NotificationController extends AdminController
      */
     public function tokenAction() : JsonResponse
     {
+        $this->checkPermission(DivanteNotificationsBundle::PERMISSION);
+
         $token      = sprintf('%s_%s', md5((string) time()), mt_rand(1000000, 9999999));
         $userId     = $this->getAdminUser()->getId();
         $userIdHash = md5((string) $userId);

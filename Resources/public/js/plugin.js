@@ -13,7 +13,7 @@ pimcore.plugin.divantenotifications.plugin = Class.create(pimcore.plugin.admin, 
     initialize: function () {
         pimcore.plugin.broker.registerPlugin(this);
 
-        var element = '<li id="pimcore_notification" data-menu-tooltip="' + t("Notifications") + '" class="pimcore_menu_needs_children">'
+        var element = '<li style="display: none" id="pimcore_notification" data-menu-tooltip="' + t("Notifications") + '" class="pimcore_menu_needs_children">'
                     + '<svg id="gicsgdfk" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">'
                     + '<path style="fill:#78909C;" d="M42.3,12.8c1.1,0.7,1.7,2,1.7,3.3V37c0,2.2-1.8,4-4,4H8c-2.2,0-4-1.8-4-4V16.1c0-1.3,0.6-2.5,1.7-3.3"/>'
                     + '<path style="fill:#CFD8DC;" d="M40,41H8c-2.2,0-4-1.8-4-4V17l20,13l20-13v20C44,39.2,42.2,41,40,41z"/>'
@@ -59,16 +59,21 @@ pimcore.plugin.divantenotifications.plugin = Class.create(pimcore.plugin.admin, 
     },
 
     pimcoreReady: function (params, broker) {
-        var toolbar = pimcore.globalmanager.get("layout_toolbar");
-        this.navEl.on("mousedown", toolbar.showSubMenu.bind(toolbar.notificationMenu));
-        pimcore.plugin.broker.fireEvent("notificationMenuReady", toolbar.notificationMenu);
-        this.startConnection();
+        if (this.isAllowed()) {
+            Ext.get('pimcore_notification').show();
+            var toolbar = pimcore.globalmanager.get("layout_toolbar");
+            this.navEl.on("mousedown", toolbar.showSubMenu.bind(toolbar.notificationMenu));
+            pimcore.plugin.broker.fireEvent("notificationMenuReady", toolbar.notificationMenu);
+            this.startConnection();
+        }
     },
 
     postOpenObject: function (object, type) {
-        var key = 'send_notification_button_' + object.id;
-        var value = new pimcore.plugin.divantenotifications.button(object);
-        pimcore.globalmanager.add(key, value);
+        if (this.isAllowed()) {
+            var key = 'send_notification_button_' + object.id;
+            var value = new pimcore.plugin.divantenotifications.button(object);
+            pimcore.globalmanager.add(key, value);
+        }
     },
 
     startConnection: function () {
@@ -125,6 +130,11 @@ pimcore.plugin.divantenotifications.plugin = Class.create(pimcore.plugin.admin, 
             runAjaxConnection();
         }, 30000);
         runAjaxConnection(); // run at the Pimcore login
+    },
+
+    isAllowed: function () {
+        var user = pimcore.globalmanager.get("user");
+        return user.isAllowed('divante_notifications_bundle_permission');
     }
 });
 

@@ -19,6 +19,8 @@ use Pimcore\Extension\Bundle\AbstractPimcoreBundle;
  */
 class DivanteNotificationsBundle extends AbstractPimcoreBundle
 {
+    const PERMISSION = 'divante_notifications_bundle_permission';
+
     /**
      * @return InstallerInterface
      */
