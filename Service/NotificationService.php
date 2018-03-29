@@ -122,6 +122,9 @@ class NotificationService
     {
         $listing = new Listing();
         $listing->setCondition('user = ? AND unread = 1 AND creationDate >= ?', [$user, time() - $interval]);
+        $listing->setOrderKey('creationDate');
+        $listing->setOrder('DESC');
+        $listing->setLimit(1);
 
         $this->beginTransaction();
         $result = ['total' => $listing->count(), 'data' => $listing->getData()];
