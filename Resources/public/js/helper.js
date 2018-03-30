@@ -57,7 +57,9 @@ pimcore.plugin.divantenotifications.helper.showNotifications = function (notific
             html: row.message,
             autoShow: true,
             width: 'auto',
-            maxWidth: 350,
+            maxWidth: 400,
+            height: 'auto',
+            maxHeight: 200,
             closable: true,
             autoClose: false,
             tools: tools
@@ -113,10 +115,13 @@ pimcore.plugin.divantenotifications.helper.openDetailsWindow = function (id, tit
         title: title,
         html: message,
         autoShow: true,
-        width: 'auto',
-        maxWidth: 700,
+        width: 700,
+        height: 350,
+        scrollable: true,
         closable: true,
-        bodyStyle: "padding: 10px; background:#fff;",
+        maximizable: true,
+        bodyStyle: "background:#fff;",
+        bodyPadding: "10px",
         autoClose: false,
         listeners: {
             focusleave: function () {
