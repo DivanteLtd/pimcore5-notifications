@@ -56,10 +56,8 @@ pimcore.plugin.divantenotifications.helper.showNotifications = function (notific
             title: row.title,
             html: row.message,
             autoShow: true,
-            width: 'auto',
-            maxWidth: 400,
-            height: 'auto',
-            maxHeight: 200,
+            width: 400,            
+            height: 150,            
             closable: true,
             autoClose: false,
             tools: tools
