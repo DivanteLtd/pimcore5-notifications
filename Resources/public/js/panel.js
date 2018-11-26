@@ -87,7 +87,7 @@ pimcore.plugin.divantenotifications.panel = Class.create({
                 items: [
                     {
                         tooltip: t('open_linked_element'),
-                        icon: "/pimcore/static6/img/flat-color-icons/cursor.svg",
+                        icon: "/bundles/pimcoreadmin/img/flat-color-icons/cursor.svg",
                         handler: function (grid, rowIndex) {
                             pimcore.plugin.divantenotifications.helper.openLinkedElement(grid.getStore().getAt(rowIndex).data);
                         }.bind(this),
@@ -103,7 +103,7 @@ pimcore.plugin.divantenotifications.panel = Class.create({
                 items: [
                     {
                         tooltip: t('open'),
-                        icon: "/pimcore/static6/img/flat-color-icons/right.svg",
+                        icon: "/bundles/pimcoreadmin/img/flat-color-icons/right.svg",
                         handler: function (grid, rowIndex) {
                             pimcore.plugin.divantenotifications.helper.openDetails(grid.getStore().getAt(rowIndex).get("id"), function() {
                                 this.reload();
@@ -112,7 +112,7 @@ pimcore.plugin.divantenotifications.panel = Class.create({
                     },
                     {
                         tooltip: t('mark_as_read'),
-                        icon: '/pimcore/static6/img/flat-color-icons/checkmark.svg',
+                        icon: '/bundles/pimcoreadmin/img/flat-color-icons/checkmark.svg',
                         handler: function (grid, rowIndex) {
                             pimcore.plugin.divantenotifications.helper.markAsRead(grid.getStore().getAt(rowIndex).get("id"), function () {
                                 this.reload();
@@ -124,7 +124,7 @@ pimcore.plugin.divantenotifications.panel = Class.create({
                     },
                     {
                         tooltip: t('delete'),
-                        icon: '/pimcore/static6/img/flat-color-icons/delete.svg',
+                        icon: '/bundles/pimcoreadmin/img/flat-color-icons/delete.svg',
                         handler: function (grid, rowIndex) {
                             pimcore.plugin.divantenotifications.helper.delete(grid.getStore().getAt(rowIndex).get("id"), function () {
                                 this.reload();
